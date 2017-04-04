@@ -5,6 +5,8 @@ var morgan = require('morgan');
 var config = require('./config');
 var jwt = require('jsonwebtoken');
 
+// Here is a comment to demonstrate git flow
+
 app.get('*', function(req, res){
   res.json({server: 'up'})
 })
