@@ -1,6 +1,9 @@
 module.exports = {
-  host: 'localhost',
-  user: 'rebeccaking',
-  password: 'XXXXX',
-  database: 'dareity'
-};
+  'secret': 'cohort5rocksmysocks',
+  db: {
+    host: 'localhost',
+    user: 'rebeccaking',
+    password: 'XXXXX',
+    database: 'dareity'
+  }
+}
