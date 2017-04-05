@@ -8,5 +8,5 @@ var jwt = require('jsonwebtoken');
 app.get('*', function(req, res){
   res.json({server: 'up'})
 })
-
+// Putting this in as an example
 app.listen(process.env.PORT || 3001);
