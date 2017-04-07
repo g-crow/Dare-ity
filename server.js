@@ -117,6 +117,20 @@ app.post('/api/delete_record', function(req, res){
   })
 })
 
+// route for pledge
+app.post('/api/make_pledge', function(req, res){
+  const {broadcaster_id, npo_id, dare_id, user_dare_id, pledger_id} = req.body;
+  var pledgeAmount = req.body.pledgeAmount
+  var queryString = "INSTERT INTO pledge (broadcaster_id, npo_id, dare_id, user_dare_id, pledger_id, pledgeAmount) " + "VALUES (" + broadcaster_id + "," npo_id "," + dare_id + "," + user_dare_id + "," + pledger_id ", " + pledgeAmount ")" 
+  pool.query(queryString, function(err, result) {
+    if(err){
+      console.error('error', err.message)
+    } else {
+      res.json(result + "This Means Success")
+    }
+  })
+})
+
   app.listen(process.env.PORT || 3001);
   console.log('magic');
 }
