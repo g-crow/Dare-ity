@@ -102,7 +102,7 @@ app.post('/api/fetch_user_dare', function(req, res) {
 	})
 })
 
-// one delete route for all DB records - table name, id column name, and record id must be provided
+// one delete route for all DB records - table name and record id must be provided
 app.post('/api/delete_record', function(req, res) {
 	const {table_name, id} = req.body
 	var queryString = "DELETE FROM " + table_name + " WHERE id = " + id
