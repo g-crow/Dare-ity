@@ -47,7 +47,7 @@ app.post('/api/fetch_user', function(req, res) {
 app.post('/api/create_dare', function(req, res) {
 	const {dare_title, dare_description, npo_creator} = req.body
 	if (dare_title === undefined || dare_description === undefined || npo_creator === undefined) {
-		res.json(JSON.stringify('Please set all required parameters.'))
+		res.json('Please set all required parameters.')
 		res.end()
 	}
 	var queryString = "INSERT INTO dare (title, description, npo_creator) "
@@ -76,7 +76,7 @@ app.post('/api/fetch_dare', function(req, res) {
 app.post('/api/create_client_dare', function(req, res) {
 	const {broadcaster_id, dare_id, npo_id} = req.body
 	if (broadcaster_id === undefined || dare_id === undefined || npo_id === undefined) {
-		res.json(JSON.stringify('Please set all required parameters.'))
+		res.json('Please set all required parameters.')
 		res.end()
 	}
 	var queryString = "INSERT INTO user_dare (broadcaster_id, dare_id, npo_id, pledge_amount_threshold) "
