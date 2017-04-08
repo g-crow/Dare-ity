@@ -35,7 +35,7 @@ apiRoutes.post('/authenticate', usercontroller.authenticate)
 
 app.post('/api/fetch_user', function(req, res) {
 	var username = req.body.username
-	pool.query("SELECT id, name, is_npo FROM user WHERE name = '" + username + "'", function(err, result) {
+	pool.query("SELECT id, name, is_npo FROM dareity_user WHERE name = '" + username + "'", function(err, result) {
 		if (err) {
 			console.error('error', err.message)
 		} else {
@@ -73,7 +73,7 @@ app.post('/api/fetch_dare', function(req, res) {
 	})
 })
 
-app.post('/api/create_client_dare', function(req, res) {
+app.post('/api/create_user_dare', function(req, res) {
 	const {broadcaster_id, dare_id, npo_id} = req.body
 	if (broadcaster_id === undefined || dare_id === undefined || npo_id === undefined) {
 		res.json('Please set all required parameters.')
