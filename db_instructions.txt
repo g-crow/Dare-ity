@@ -13,6 +13,6 @@ https://www.postgresql.org/docs/9.6/static/tutorial-createdb.html
 	2. su - postgres
 	3. psql
 	
-	You are now logged-in to the Postgress command-line tool. Next:
+	You are now logged-in to the Postgres command-line tool. Next:
 	
-	1. CREATE 
+	1. CREATE ROLE dareity <will contiue writing this file over the weekend>
