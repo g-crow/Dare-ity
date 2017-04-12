@@ -19,8 +19,8 @@ class User{
 			bcrypt.hash(this.password, config.saltRounds, (hashErr, hashed_password) => {
 				if (!hashErr){
 					const queryString = `INSERT INTO dareity_user (name, password, email, is_npo) 
-          VALUES ('${this.name}', '${hashed_password}', '${this.email}', ${this.is_npo}) RETURNING *`
-					db.query(queryString, callback)
+          VALUES ($1, $2, $3, $4) RETURNING *`
+					db.query(queryString, [this.name, hashed_password, this.email, this.is_npo], callback)
 				} else {
 					callback(hashErr)
 				}
@@ -30,8 +30,8 @@ class User{
 }
 
 User.authenticate = function(name, password, callback){
-    db.query(`SELECT name, id, is_npo, password FROM dareity_user WHERE name = '${name}'`,
-    function(err, result) {
+    let queryString = `SELECT name, id, is_npo, password FROM dareity_user WHERE name = $1`
+    db.query(queryString, [name], function(err, result) {
       const user = result.rows[0]
       if (err) throw err;
         if (!user) {
@@ -74,7 +74,7 @@ User.requireLogin = function(req, res, next) {
 };
 
 User.fetchUser = function(query, callback) {
-  db.query('SELECT name, email FROM dareity_user WHERE name=$1 OR email=$1', [query], function(err, result){
+  db.query('SELECT name, email FROM dareity_user WHERE name=$1 OR email=$2', [query.name, query.email], function(err, result){
     const user = result.rows[0]
     if (err){
       callback(err.message)
@@ -87,16 +87,28 @@ User.fetchUser = function(query, callback) {
 };
 
 User.updateUser = function(query, id, callback) {
-  let columns = ''
-  if (query.is_npo) columns += `is_npo = ${query.is_npo}, `
-  if (query.email) columns += `email = '${query.email}', `
+  let columns= ''
+  let columnArr = []
+  let colCounter = 0
+  if (query.is_npo) {
+    colCounter++
+    columnArr.push(query.is_npo)
+    columns += `is_npo = $${colCounter}, `
+  }
+  if (query.email) {
+    colCounter++
+    columnArr.push(query.email)
+    columns += `email = $${colCounter}, `
+  }
   columns = columns.replace(/, $/, '')
-  const queryString = `UPDATE dareity_user SET ${columns} WHERE id = ${id}`
-  db.query(queryString, function(err, result) {
+  colCounter++
+  columnArr.push(id)
+  const queryString = `UPDATE dareity_user SET ${columns} WHERE id = $${colCounter} RETURNING *`
+  db.query(queryString, columnArr, function(err, result) {
     if (err) {
-      callback('Sorry, please try again')
+      callback(null, err.message)
     } else {
-      callback(null, 'User info updated')
+      callback(null, result)
     }
   })
 }

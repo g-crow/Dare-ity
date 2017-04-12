@@ -39,8 +39,8 @@ app.use('/api', apiRoutes);
 //POST
 apiRoutes.post('/create_user', usercontroller.createuser);
 apiRoutes.post('/authenticate', usercontroller.authenticate);
-apiRoutes.post('/fetch_user', usercontroller.fetchUser); 
-apiRoutes.post('/update_user', usercontroller.updateUser);
+apiRoutes.post('/fetch_user', User.requireLogin, usercontroller.fetchUser); 
+apiRoutes.post('/update_user', User.requireLogin, usercontroller.updateUser);
 
 // dare routes
 apiRoutes.post('/create_dare', User.requireLogin, function(req, res) {

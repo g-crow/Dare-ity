@@ -27,9 +27,8 @@ const authenticate = function(req, res) {
 }
 
 const fetchUser = function(req, res) {
-  const { query } = req.body;
-  User.fetchUser(query, (err, result) => {
-    console.log('Result', result)
+  const { name, email } = req.body;
+  User.fetchUser(req.body, (err, result) => {
     if (err){
       res.status(400).json({success: false, message: err})
     } else {
